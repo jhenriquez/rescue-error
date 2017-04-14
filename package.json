@@ -1,0 +1,31 @@
+{
+  "name": "rescue-error",
+  "version": "0.0.1",
+  "description": "A small API that allows branching on error handling based on specific rules.",
+  "main": "lib/rescue.js",
+  "scripts": {
+    "test": "mocha --recursive specs/",
+    "build:watch": "tsc -w",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhenriquez/rescue-error.git"
+  },
+  "keywords": [
+    "Error",
+    "Handling"
+  ],
+  "author": "Julio Henriquez <julio.m.henriquez@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhenriquez/rescue-error/issues"
+  },
+  "homepage": "https://github.com/jhenriquez/rescue-error#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0"
+  }
+}
