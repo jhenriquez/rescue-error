@@ -1,7 +1,8 @@
 import { Rule,
          ifAttributeRule,
          IfMessageRule,
-         DefaultRule, IfTypeRule
+         DefaultRule,
+         IfTypeRule
        } from "./rules";
 
 export class Rescue {
@@ -15,7 +16,6 @@ export class Rescue {
 
   contextError: Error;
   rules: Rule[] = [];
-  defaultRule: Rule;
 
   ifAttribute (property : string, predicate: Function): Rescue {
     this.rules.push(new ifAttributeRule(property, predicate));
@@ -33,13 +33,13 @@ export class Rescue {
   }
 
   default (predicate: Function) : Rescue {
-    this.defaultRule = new DefaultRule(predicate);
+    this.rules.push(new DefaultRule(predicate));
     return this;
   }
 
   do () : void {
-    let applicableRule = this.rules.filter((r) => r.condition(this.contextError)).shift() || this.defaultRule;
-    if (applicableRule) { return applicableRule.predicate(this.contextError); }
+    let applicableRule = this.rules.find(Rule.matches(this.contextError));
+    if (applicableRule) { return applicableRule.apply(this.contextError); }
     throw new Error('No rules were applied.');
   }
 }
