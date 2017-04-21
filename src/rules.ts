@@ -1,8 +1,16 @@
-export class Rule {
-  constructor (public condition: (err:Error)=>Boolean, public apply: Function) { }
+enum RulePriority { normal = 0, default }
 
-  static matches(...args) {
-    return (rule) => rule.condition(...args);
+export class Rule {
+  constructor (public predicate: (err:Error)=>Boolean, public apply: Function) { }
+
+  priority: RulePriority = RulePriority.normal;
+
+  static matches(contextError: Error) {
+    return (rule: Rule) => rule.predicate(contextError);
+  }
+
+  static sortRulesArray () {
+    return (a: Rule, b: Rule) => a.priority - b.priority;
   }
 }
 
@@ -31,5 +39,6 @@ export class IfTypeRule extends Rule {
 export class DefaultRule extends Rule {
   constructor (apply: Function) {
     super(_ => true, apply);
+    this.priority = RulePriority.default;
   }
 }

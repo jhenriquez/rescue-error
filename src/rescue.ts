@@ -1,8 +1,9 @@
-import { Rule,
-         ifAttributeRule,
-         IfMessageRule,
-         DefaultRule,
-         IfTypeRule
+import {
+        Rule,
+        ifAttributeRule,
+        IfMessageRule,
+        DefaultRule,
+        IfTypeRule
        } from "./rules";
 
 export class Rescue {
@@ -38,7 +39,7 @@ export class Rescue {
   }
 
   do () : void {
-    let applicableRule = this.rules.find(Rule.matches(this.contextError));
+    let [ applicableRule ] = this.rules.filter(Rule.matches(this.contextError)).sort(Rule.sortRulesArray());
     if (applicableRule) { return applicableRule.apply(this.contextError); }
     throw new Error('No rules were applied.');
   }

@@ -121,8 +121,8 @@ describe('Rescue', () => {
       it('throws an Error if no rule applies and no default operation is set.', () => {
         chai.expect(() => {
           new Rescue(sampleError)
-                  .ifAttribute('nothing', _ => ifAttributeSpy)
-                  .ifMessage(/none/, _ => ifMessageSpy)
+                  .ifAttribute('nothing', ifAttributeSpy)
+                  .ifMessage(/none/, ifMessageSpy)
                   .do();
         }).to.throw(Error, 'No rules were applied.');
       });
@@ -130,12 +130,24 @@ describe('Rescue', () => {
       it('fallsback to the default operation when no rules applies.', () => {
         new Rescue(sampleError)
                 .default(defaultSpy)
-                .ifAttribute('nothing', _ => ifAttributeSpy)
-                .ifMessage(/none/, _ => ifMessageSpy)
+                .ifAttribute('nothing', ifAttributeSpy)
+                .ifMessage(/none/, ifMessageSpy)
                 .do();
 
         defaultSpy.should.have.been.calledWith(sampleError);
         ifAttributeSpy.should.not.have.been.called;
+        ifMessageSpy.should.not.have.been.called;
+      });
+
+      it('does not fallback to the default operation if other rules apply.', () => {
+        new Rescue(sampleError)
+                .default(defaultSpy)
+                .ifType(Error, ifTypeSpy)
+                .ifMessage(/none/, ifMessageSpy)
+                .do();
+
+        ifTypeSpy.should.have.been.called;
+        defaultSpy.should.not.have.been.called;
         ifMessageSpy.should.not.have.been.called;
       });
     });
