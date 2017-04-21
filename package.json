@@ -1,6 +1,6 @@
 {
   "name": "rescue-error",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "A small API that allows branching on error handling based on specific rules.",
   "main": "lib/rescue.js",
   "scripts": {
