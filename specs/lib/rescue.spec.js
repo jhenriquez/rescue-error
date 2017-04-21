@@ -1,6 +1,8 @@
-const chai        = require('chai');
-const sinon       = require('sinon');
-const { Rescue }  = require('../../lib/rescue');
+'use strict';
+
+const chai   = require('chai');
+const sinon  = require('sinon');
+const Rescue = require('../../lib/rescue').Rescue;
 
 describe('Rescue', () => {
   describe('#()', () => {
@@ -19,6 +21,7 @@ describe('Rescue', () => {
     let sampleError;
     let ifAttributeSpy;
     let ifMessageSpy;
+    let ifTypeSpy;
     let defaultSpy;
 
     beforeEach(() => {
