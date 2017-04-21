@@ -1,6 +1,6 @@
-const chai        = require('chai');
-const sinon       = require('sinon');
-const { Rescue }  = require('../../lib/rescue');
+const chai   = require('chai');
+const sinon  = require('sinon');
+const Rescue = require('../../lib/rescue').Rescue;
 
 describe('Rescue', () => {
   describe('#()', () => {
