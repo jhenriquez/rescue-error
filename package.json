@@ -4,7 +4,7 @@
   "description": "A small API that allows branching on error handling based on specific rules.",
   "main": "lib/rescue.js",
   "scripts": {
-    "test": "mocha --recursive specs/",
+    "test": "mocha --recursive --harmony specs/",
     "build:watch": "tsc -w",
     "build": "tsc"
   },
