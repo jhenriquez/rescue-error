@@ -18,23 +18,23 @@ export class Rescue {
   contextError: Error;
   rules: Rule[] = [];
 
-  ifAttribute (property : string, predicate: Function): Rescue {
-    this.rules.push(new ifAttributeRule(property, predicate));
+  ifAttribute (property : string, action: Function): Rescue {
+    this.rules.push(new ifAttributeRule(property, action));
     return this;
   }
 
-  ifMessage (regex: RegExp, predicate: Function): Rescue {
-    this.rules.push(new IfMessageRule(regex, predicate));
+  ifMessage (regex: RegExp, action: Function): Rescue {
+    this.rules.push(new IfMessageRule(regex, action));
     return this;
   }
 
-  ifType (type: Function, predicate: Function): Rescue {
-    this.rules.push(new IfTypeRule(type, predicate));
+  ifType (type: Function, action: Function): Rescue {
+    this.rules.push(new IfTypeRule(type, action));
     return this;
   }
 
-  default (predicate: Function) : Rescue {
-    this.rules.push(new DefaultRule(predicate));
+  default (action: Function) : Rescue {
+    this.rules.push(new DefaultRule(action));
     return this;
   }
 
