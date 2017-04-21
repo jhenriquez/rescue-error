@@ -1,10 +1,22 @@
+enum RulePriority { normal = 0, default }
+
 export class Rule {
-  constructor (public condition: (err:Error)=>Boolean, public predicate: Function) { }
+  constructor (public predicate: (err:Error)=>Boolean, public apply: Function) { }
+
+  priority: RulePriority = RulePriority.normal;
+
+  static matches(contextError: Error) {
+    return (rule: Rule) => rule.predicate(contextError);
+  }
+
+  static sortRulesArray () {
+    return (a: Rule, b: Rule) => a.priority - b.priority;
+  }
 }
 
 export class ifAttributeRule extends Rule {
-  constructor (private property: string, predicate: Function) {
-    super((ctx: Error) => this.hasTruthyProperty(this.property, ctx), predicate);
+  constructor (private property: string, apply: Function) {
+    super((ctx: Error) => this.hasTruthyProperty(this.property, ctx), apply);
   }
 
   private hasTruthyProperty (property: string, ctx: any): Boolean {
@@ -13,19 +25,20 @@ export class ifAttributeRule extends Rule {
 }
 
 export class IfMessageRule extends Rule {
-  constructor (regex: RegExp, predicate: Function) {
-    super((ctx: Error) => regex.test(ctx.message), predicate);
+  constructor (regex: RegExp, apply: Function) {
+    super((ctx: Error) => regex.test(ctx.message), apply);
   }
 }
 
 export class IfTypeRule extends Rule {
-  constructor (private type: Function, predicate: Function) {
-    super((ctx: Error) => ctx instanceof type, predicate);
+  constructor (private type: Function, apply: Function) {
+    super((ctx: Error) => ctx instanceof type, apply);
   }
 }
 
 export class DefaultRule extends Rule {
-  constructor (predicate: Function) {
-    super(_ => true, predicate);
+  constructor (apply: Function) {
+    super(_ => true, apply);
+    this.priority = RulePriority.default;
   }
 }
