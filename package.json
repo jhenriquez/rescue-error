@@ -1,12 +1,13 @@
 {
   "name": "rescue-error",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "A small API that allows branching on error handling based on specific rules.",
   "main": "lib/rescue.js",
   "scripts": {
     "test": "mocha --recursive --harmony specs/",
     "build:watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
